@@ -7,6 +7,7 @@ import {
   incrementAmount,
   fetchCountAsync,
 } from "./feature/counter/counterSlice";
+import {Counter} from "./feature/counter/index";
 
 function App() {
   const [amount, setAmount] = useState(0);
@@ -14,18 +15,7 @@ function App() {
   const dispatch = useDispatch();
   return (
     <div className="App">
-      <div>Count: {count}</div>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-      <button onClick={() => dispatch(fetchCountAsync())}>FetchCount</button>
-      <div>Loading Status: {loadingStatus}</div>
-      <div>
-        <button onClick={() => dispatch(incrementAmount(amount))}>
-          IncrementAmount
-        </button>
-        Amount:
-        <input type="number" onChange={(e) => setAmount(e.target.value)} />
-      </div>
+    <Counter />
     </div>
   );
 }
