@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import cloneDeep from "lodash/cloneDeep";
 import {
   Table,
   Thead,
@@ -8,13 +9,16 @@ import {
   Th,
   Td,
   TableContainer,
+  Checkbox,
 } from "@chakra-ui/react";
 export const UserTable = (props) => {
   const { columnNames, data } = props;
   const _renderHeader = () => {
+    const cloneColumnNames = cloneDeep(columnNames);
+    cloneColumnNames.unshift("");
     return (
       <Tr>
-        {columnNames.map((columnName) => {
+        {cloneColumnNames.map((columnName) => {
           return <Th>{columnName}</Th>;
         })}
       </Tr>
@@ -24,6 +28,9 @@ export const UserTable = (props) => {
     return data.map((user) => {
       return (
         <Tr key={uuidv4()}>
+          <Td>
+            <Checkbox />
+          </Td>
           <Td>{user.name}</Td>
           <Td>{user.age}</Td>
         </Tr>
