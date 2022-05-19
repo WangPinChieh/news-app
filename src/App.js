@@ -6,6 +6,20 @@ import { setUsers } from "./feature/user/userSlice";
 // import { UserTable } from "./feature/user/index";
 import { Table } from "./feature/custom-react-table/index";
 import { v4 as uuidv4 } from "uuid";
+import { Center } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
+} from "@chakra-ui/react";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,13 +50,34 @@ function App() {
     ],
     []
   );
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div className="App">
+      <IconButton
+        colorScheme="blue"
+        aria-label="Search database"
+        icon={<ShoppingCartIcon />}
+        onClick={onOpen}
+      />
       <Counter />
       Length: {users.length}
       {/* <UserTable columnNames={["name", "age"]} data={users} /> */}
       <Table columns={columns} data={users} />
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Shipping Cart</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
