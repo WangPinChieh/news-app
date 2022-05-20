@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useTable, useRowSelect } from "react-table";
 import { Center } from "@chakra-ui/react";
@@ -49,7 +49,7 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-export const Table = ({ columns, data }) => {
+export const Table = ({ columns, data, onSelectChanged}) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -89,7 +89,11 @@ export const Table = ({ columns, data }) => {
       ]);
     }
   );
-
+  useEffect(() => {
+    if(selectedFlatRows && selectedFlatRows.length > 0) {
+      onSelectChanged(selectedFlatRows.map(row => row.original));
+    }
+  }, [selectedFlatRows]);
   // Render the UI for your table
   return (
     <>
@@ -122,7 +126,7 @@ export const Table = ({ columns, data }) => {
           </tbody>
         </table>
       </Center>
-      <p>Selected Rows: {Object.keys(selectedRowIds).length}</p>
+      {/* <p>Selected Rows: {Object.keys(selectedRowIds).length}</p>
       <pre>
         <code>
           {JSON.stringify(
@@ -136,7 +140,7 @@ export const Table = ({ columns, data }) => {
             2
           )}
         </code>
-      </pre>
+      </pre> */}
     </>
   );
 };
